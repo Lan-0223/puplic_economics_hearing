@@ -11,7 +11,7 @@
   <header class="topbar">
     <div>
       <h1>X市建投集团300亿债务危机紧急听证会</h1>
-      <p>公共经济学互动角色扮演课程作业</p>
+      <p>公共经济学互动角色扮演：地方债务、财政兜底与纳税人责任边界</p>
     </div>
   </header>
 
@@ -20,14 +20,14 @@
     <h2>课程考点</h2>
     <ul>
       <li>地方政府债务</li>
+      <li>城投融资平台</li>
       <li>隐性担保</li>
-      <li>财政分权</li>
-      <li>《预算法》约束</li>
-      <li>财政风险外溢</li>
-      <li>纳税人负担</li>
-      <li>金融稳定</li>
       <li>刚性兑付</li>
       <li>预算软约束</li>
+      <li>财政风险外溢</li>
+      <li>财政分权</li>
+      <li>纳税人负担</li>
+      <li>《预算法》约束</li>
     </ul>
   </aside>
 
@@ -35,25 +35,30 @@
     <!-- 一、核心剧情背景模块 -->
     <section class="hero-section">
       <div class="opening-text">
-        <span>听证会现在开始：中央财政是否应为地方城投债务危机兜底？</span>
+        <span>听证会开场：中央财政是否应该为X市建投集团300亿到期债务兜底？</span>
       </div>
 
       <div class="hero-grid">
         <div class="hero-copy">
           <h2>危机背景</h2>
           <p>
-            省会X市建投集团总债务高达 <strong>1500亿元</strong>，其中
+            省会X市建投集团总债务 <strong>1500亿元</strong>，其中
             <strong>300亿元</strong> 将在半年内集中到期。集团主营水务、热力、
             地铁、棚改等公共民生业务。
           </p>
           <p>
-            若发生债务违约，可能导致 <strong>300万市民</strong> 水务、供暖、
+            若发生债务违约，可能导致 <strong>300万市民</strong> 的水务、供暖、
             轨道交通等公共服务中断，并引发全省城投债务连锁暴雷风险。
           </p>
           <p>
             省政府向中央财政部申请发行 <strong>300亿特别再融资债</strong>，
             用于兜底化解本次到期债务。
           </p>
+
+          <div class="student-box">
+            <label for="studentName">学生 / 小组席位</label>
+            <input id="studentName" type="text" placeholder="例如：第三组、张三、财政部代表团" />
+          </div>
         </div>
 
         <div class="data-board">
@@ -78,9 +83,10 @@
 
       <!-- 知识点悬浮提示 -->
       <div class="concept-row">
-        <button class="concept-btn" data-tip="城投公司通常承担城市基础设施和公共项目融资建设职能，常被视为地方政府融资平台。">什么是城投？</button>
-        <button class="concept-btn" data-tip="隐性担保是指政府虽未正式承诺偿债，但市场相信政府不会让相关主体违约。">什么是隐性担保？</button>
-        <button class="concept-btn" data-tip="特别再融资债通常用于置换或化解存量债务，缓解短期偿债压力。">什么是再融资债？</button>
+        <button class="concept-btn" data-tip="城投公司通常承担城市基础设施和公共项目融资建设职能，常被视为地方政府融资平台。">城投</button>
+        <button class="concept-btn" data-tip="隐性担保是指政府虽未正式承诺偿债，但市场相信政府不会让相关主体违约。">隐性担保</button>
+        <button class="concept-btn" data-tip="特别再融资债通常用于置换或化解存量债务，缓解短期偿债压力。">再融资债</button>
+        <button class="concept-btn" data-tip="预算软约束是指借款主体相信最终会有人救助，从而降低自身风险约束。">预算软约束</button>
       </div>
     </section>
 
@@ -88,7 +94,7 @@
     <section class="section-block">
       <div class="section-title">
         <h2>选择你的听证会角色</h2>
-        <p>点击角色卡片，进入对应身份立场。</p>
+        <p>点击角色卡片进入听证会。每个角色拥有不同目标、证据偏好和投票倾向。</p>
       </div>
 
       <div id="roleCards" class="role-grid"></div>
@@ -97,20 +103,95 @@
     <!-- 三、听证会辩论交互模块 -->
     <section id="hearingPanel" class="section-block hidden">
       <div class="section-title">
-        <h2>听证会辩论环节</h2>
+        <h2>听证会正式发言</h2>
         <p id="currentRoleLabel">当前身份：</p>
       </div>
 
       <div class="hearing-layout">
+        <!-- 当前角色立场 -->
         <article id="roleStatement" class="statement-card"></article>
 
-        <article class="debate-card">
-          <h3>多轮观点对辩</h3>
-          <div id="debateLog" class="debate-log">
-            <p class="empty-tip">点击下方按钮，开始与其他角色进行对辩。</p>
-          </div>
-          <button id="nextDebateBtn" class="main-btn">开启下一轮对辩</button>
+        <!-- 动态评分面板 -->
+        <article class="score-card">
+          <h3>课堂观察指标</h3>
+          <p class="small-text">你的每次发言和证据选择都会改变这些指标。</p>
+          <div id="scoreGrid" class="score-grid"></div>
         </article>
+      </div>
+
+      <!-- 证据卡牌模块 -->
+      <div class="sub-panel">
+        <div class="sub-title">
+          <h3>选择证据卡</h3>
+          <p>证据会影响你的发言内容和政策测算。</p>
+        </div>
+        <div id="evidenceDeck" class="evidence-grid"></div>
+      </div>
+
+      <!-- 学生发言生成器 -->
+      <div class="sub-panel">
+        <div class="sub-title">
+          <h3>学生发言生成器</h3>
+          <p>选择发言方式，然后生成一段更像真实听证会的角色发言。</p>
+        </div>
+
+        <div class="control-grid">
+          <div>
+            <label for="toneSelect">发言语气</label>
+            <select id="toneSelect">
+              <option value="理性陈述">理性陈述</option>
+              <option value="强硬质询">强硬质询</option>
+              <option value="民生诉求">民生诉求</option>
+              <option value="妥协谈判">妥协谈判</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="goalSelect">发言目标</label>
+            <select id="goalSelect">
+              <option value="争取政策支持">争取政策支持</option>
+              <option value="要求公开审计">要求公开审计</option>
+              <option value="压低道德风险">压低道德风险</option>
+              <option value="保护公共服务">保护公共服务</option>
+              <option value="维护纳税公平">维护纳税公平</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <button class="action-btn" data-action="question">提出质询</button>
+          <button class="action-btn" data-action="audit">要求审计</button>
+          <button class="action-btn" data-action="service">保护民生</button>
+          <button class="action-btn" data-action="extension">提出展期</button>
+          <button class="action-btn" data-action="accountability">要求问责</button>
+          <button class="action-btn" data-action="payment">主张兑付</button>
+        </div>
+
+        <div class="generated-box">
+          <h4>本轮生成发言</h4>
+          <p id="generatedSpeech">请先选择角色、证据卡和发言动作。</p>
+        </div>
+      </div>
+
+      <!-- 对辩记录 -->
+      <div class="sub-panel">
+        <div class="sub-title">
+          <h3>听证会记录</h3>
+          <p>系统会记录你的发言、对手回应和理论锚点。</p>
+        </div>
+
+        <div class="record-layout">
+          <div id="hearingRecord" class="record-log">
+            <p class="empty-tip">尚未产生听证记录。</p>
+          </div>
+
+          <div id="opponentReply" class="reply-box">
+            <h4>对手回应</h4>
+            <p>等待第一轮发言。</p>
+          </div>
+        </div>
+
+        <button id="finishDebateBtn" class="main-btn">结束辩论，进入政策投票</button>
       </div>
     </section>
 
@@ -118,7 +199,12 @@
     <section id="votePanel" class="section-block hidden">
       <div class="section-title">
         <h2>政策投票决策</h2>
-        <p>请以当前角色身份进行投票。</p>
+        <p>投票前可以选择附加条件，让决策更接近真实世界的财政谈判。</p>
+      </div>
+
+      <div class="conditions-panel">
+        <h3>可选配套条件</h3>
+        <div id="conditionList" class="condition-grid"></div>
       </div>
 
       <div class="vote-grid">
@@ -137,26 +223,24 @@
     <section id="resultPanel" class="section-block hidden">
       <div class="section-title">
         <h2>结果测算面板</h2>
-        <p>比较两种政策选择的公共经济影响。</p>
+        <p>测算会根据你的角色、证据、发言动作和配套条件动态调整。</p>
       </div>
+
+      <div id="impactSummary" class="impact-summary"></div>
 
       <div class="result-grid">
         <article class="result-card approve-result">
           <h3>方案A：批准中央兜底</h3>
           <ul id="approveMetrics"></ul>
-          <p>
-            经济学解读：该方案有助于短期金融稳定和公共服务连续性，但可能强化地方政府和城投平台的预算软约束，形成“出了问题由中央兜底”的预期。
-          </p>
         </article>
 
         <article class="result-card reject-result">
           <h3>方案B：拒绝中央兜底</h3>
           <ul id="rejectMetrics"></ul>
-          <p>
-            经济学解读：该方案强调《预算法》纪律和谁借谁还原则，有助于打破刚性兑付，但短期可能放大债市波动、就业冲击和公共服务中断风险。
-          </p>
         </article>
       </div>
+
+      <div id="teacherNote" class="teacher-note"></div>
     </section>
   </main>
 
