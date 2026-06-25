@@ -13,13 +13,23 @@ body {
   line-height: 1.6;
 }
 
-button {
+button,
+input,
+select {
   font-family: inherit;
+}
+
+button {
   cursor: pointer;
 }
 
 .hidden {
   display: none;
+}
+
+.small-text {
+  color: #667085;
+  font-size: 14px;
 }
 
 /* =========================
@@ -72,7 +82,7 @@ button {
 }
 
 /* =========================
-   首页开场动画与数据面板
+   首页背景区
    ========================= */
 .opening-text {
   width: 100%;
@@ -116,6 +126,20 @@ button {
   color: #b91c1c;
 }
 
+.student-box {
+  margin-top: 18px;
+  display: grid;
+  gap: 8px;
+}
+
+.student-box input {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 11px 12px;
+  font-size: 15px;
+}
+
 .data-board {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -148,7 +172,7 @@ button {
 }
 
 /* =========================
-   知识点悬浮提示按钮
+   知识点悬浮提示
    ========================= */
 .concept-row {
   display: flex;
@@ -176,7 +200,7 @@ button {
   position: absolute;
   left: 0;
   bottom: 120%;
-  width: 260px;
+  width: 280px;
   background: #111827;
   color: white;
   padding: 10px;
@@ -227,11 +251,12 @@ button {
 }
 
 .role-card {
-  min-height: 210px;
+  min-height: 230px;
   border: 2px solid transparent;
   border-radius: 8px;
   padding: 16px;
   color: white;
+  text-align: left;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
@@ -250,13 +275,14 @@ button {
   font-size: 18px;
 }
 
-.role-card .tag {
+.role-card .tag,
+.role-card .tendency {
   display: inline-block;
   background: rgba(255, 255, 255, 0.2);
   padding: 4px 8px;
   border-radius: 999px;
   font-size: 13px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .role-card p {
@@ -265,16 +291,17 @@ button {
 }
 
 /* =========================
-   听证会辩论区
+   听证会布局
    ========================= */
 .hearing-layout {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.1fr 0.9fr;
   gap: 18px;
 }
 
 .statement-card,
-.debate-card {
+.score-card,
+.sub-panel {
   border: 1px solid #dbe2ea;
   border-radius: 8px;
   padding: 18px;
@@ -282,43 +309,233 @@ button {
 }
 
 .statement-card h3,
-.debate-card h3 {
+.score-card h3,
+.sub-title h3 {
   margin-top: 0;
+}
+
+.sub-panel {
+  margin-top: 18px;
+}
+
+.sub-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: baseline;
+  margin-bottom: 12px;
+}
+
+.sub-title p {
+  margin: 0;
+  color: #667085;
+  font-size: 14px;
 }
 
 .stance-list {
   padding-left: 20px;
 }
 
-.debate-log {
-  min-height: 220px;
-  max-height: 360px;
+.role-objective {
+  background: white;
+  border: 1px solid #dbe2ea;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 12px;
+}
+
+/* =========================
+   评分条
+   ========================= */
+.score-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.score-item {
+  display: grid;
+  gap: 4px;
+}
+
+.score-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.score-bar {
+  height: 9px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.score-fill {
+  height: 100%;
+  width: 50%;
+  background: #1d4ed8;
+  border-radius: 999px;
+  transition: width 0.3s;
+}
+
+/* =========================
+   证据卡牌
+   ========================= */
+.evidence-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.evidence-card {
+  min-height: 150px;
+  border: 1px solid #dbe2ea;
+  border-radius: 8px;
+  background: white;
+  padding: 14px;
+  text-align: left;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.evidence-card:hover {
+  transform: translateY(-3px);
+  border-color: #2563eb;
+}
+
+.evidence-card.active {
+  border-color: #b91c1c;
+  box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.14);
+}
+
+.evidence-card h4 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+.evidence-card p {
+  margin: 0;
+  font-size: 14px;
+  color: #475467;
+}
+
+.evidence-card .concept-tag {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #3730a3;
+  font-size: 12px;
+}
+
+/* =========================
+   发言生成器
+   ========================= */
+.control-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.control-grid label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.control-grid select {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 10px;
+  background: white;
+}
+
+.action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.action-btn {
+  border: 1px solid #9aa8b8;
+  background: white;
+  color: #1f2933;
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.action-btn:hover {
+  border-color: #1d4ed8;
+  background: #eef4ff;
+}
+
+.generated-box {
+  margin-top: 14px;
+  background: white;
+  border: 1px solid #dbe2ea;
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.generated-box h4 {
+  margin: 0 0 8px;
+}
+
+.generated-box p {
+  margin: 0;
+}
+
+/* =========================
+   听证记录与回应
+   ========================= */
+.record-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 16px;
+}
+
+.record-log {
+  min-height: 260px;
+  max-height: 380px;
   overflow-y: auto;
   background: white;
   border: 1px solid #dbe2ea;
   border-radius: 8px;
   padding: 14px;
-  margin-bottom: 14px;
+}
+
+.record-item {
+  border-left: 4px solid #64748b;
+  background: #f8fafc;
+  padding: 11px;
+  margin-bottom: 12px;
+}
+
+.record-item strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.reply-box {
+  background: white;
+  border: 1px solid #dbe2ea;
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.reply-box h4 {
+  margin-top: 0;
 }
 
 .empty-tip {
   color: #667085;
 }
 
-.speech {
-  margin-bottom: 14px;
-  padding: 10px;
-  border-left: 4px solid #64748b;
-  background: #f8fafc;
-}
-
-.speech strong {
-  display: block;
-  margin-bottom: 4px;
-}
-
 .main-btn {
   width: 100%;
+  margin-top: 16px;
   border: none;
   background: #1d4ed8;
   color: white;
@@ -327,14 +544,37 @@ button {
   font-size: 15px;
 }
 
-.main-btn:disabled {
-  background: #94a3b8;
-  cursor: not-allowed;
+/* =========================
+   投票与条件
+   ========================= */
+.conditions-panel {
+  border: 1px solid #dbe2ea;
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 18px;
 }
 
-/* =========================
-   投票区
-   ========================= */
+.conditions-panel h3 {
+  margin-top: 0;
+}
+
+.condition-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.condition-item {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  background: white;
+  border: 1px solid #dbe2ea;
+  border-radius: 8px;
+  padding: 11px;
+}
+
 .vote-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -370,6 +610,14 @@ button {
 /* =========================
    结果测算面板
    ========================= */
+.impact-summary {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 18px;
+}
+
 .result-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -399,6 +647,14 @@ button {
   padding-left: 20px;
 }
 
+.teacher-note {
+  margin-top: 18px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  padding: 15px;
+}
+
 /* =========================
    理论解读弹窗
    ========================= */
@@ -418,7 +674,7 @@ button {
 
 .modal-content {
   position: relative;
-  width: min(520px, calc(100% - 40px));
+  width: min(540px, calc(100% - 40px));
   background: white;
   border-radius: 8px;
   padding: 26px;
@@ -451,14 +707,18 @@ button {
     margin: 20px auto 0;
   }
 
-  .role-grid {
+  .role-grid,
+  .evidence-grid,
+  .condition-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
   .hero-grid,
   .hearing-layout,
+  .record-layout,
   .vote-grid,
-  .result-grid {
+  .result-grid,
+  .control-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -469,6 +729,8 @@ button {
   }
 
   .role-grid,
+  .evidence-grid,
+  .condition-grid,
   .data-board {
     grid-template-columns: 1fr;
   }
