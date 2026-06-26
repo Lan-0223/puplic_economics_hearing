@@ -1,7 +1,3 @@
-/* =========================
-   一、角色数据模块
-   每个角色绑定颜色、立场、目标和默认投票倾向
-   ========================= */
 const roles = {
   province: {
     name: "省政府",
@@ -10,12 +6,7 @@ const roles = {
     tendency: "approve",
     short: "强调金融稳定、公共服务连续性和中央财政兜底必要性。",
     objective: "争取中央批准300亿特别再融资债，避免全省城投融资成本上升。",
-    opening: [
-      "不救助会抬升全省城投融资成本。",
-      "金融稳定具有全国性外部性，中央财政不能完全置身事外。",
-      "300亿元对中央财政体量压力较小，却能避免系统性金融风险。",
-      "已有遵义道桥156亿化债先例，本案应获批再融资债。"
-    ]
+    opening: "不救助会抬升全省城投融资成本，金融稳定具有外部性，中央财政不能完全置身事外。"
   },
   ministry: {
     name: "财政部",
@@ -23,13 +14,8 @@ const roles = {
     color: "#374151",
     tendency: "reject",
     short: "坚持预算纪律，反对形成中央兜底预期。",
-    objective: "维护《预算法》纪律，防止地方政府形成向中央倒逼救助的预期。",
-    opening: [
-      "中央兜底会强化地方和城投平台的预算软约束。",
-      "依据47号文和《预算法》，地方债务应坚持谁借谁还。",
-      "不能用全国纳税人为地方无序举债买单。",
-      "一旦开口，各地城投可能跟风倒逼中央救助。"
-    ]
+    objective: "维护《预算法》纪律，防止地方形成向中央倒逼救助的预期。",
+    opening: "中央兜底会强化预算软约束，不能用全国纳税人为地方无序举债买单。"
   },
   platform: {
     name: "城投集团负责人",
@@ -37,13 +23,8 @@ const roles = {
     color: "#f97316",
     tendency: "approve",
     short: "强调城投承担公共任务，自身并非完全自主举债。",
-    objective: "说明城投债务形成的政府任务属性，争取债务展期和再融资支持。",
-    opening: [
-      "城投承担水务、供暖、地铁、棚改等民生业务。",
-      "隐性担保和融资任务由地方政府长期催生。",
-      "集团并无完全自主的举债决策权。",
-      "若违约，将造成员工失业、承包商回款断裂和公共服务冲击。"
-    ]
+    objective: "说明城投债务形成的政府任务属性，争取展期和再融资支持。",
+    opening: "城投承担水务、供暖、地铁、棚改等民生业务，违约会冲击就业和公共服务。"
   },
   creditor: {
     name: "债券债权人",
@@ -52,12 +33,7 @@ const roles = {
     tendency: "approve",
     short: "主张维护刚性兑付，避免债市恐慌。",
     objective: "要求保护债券投资者权益，避免信用债市场信心崩塌。",
-    opening: [
-      "发行时评级和承销机构均暗示存在政府支持。",
-      "突然打破刚性兑付，可能引发全国债市信心崩塌。",
-      "底层资金包含普通居民理财和养老退休资金。",
-      "参考永煤违约冲击，本次必须高度重视全额兑付。"
-    ]
+    opening: "发行时市场形成政府支持预期，突然打破刚兑会引发债市信心冲击。"
   },
   taxpayer: {
     name: "普通纳税人",
@@ -66,179 +42,47 @@ const roles = {
     tendency: "reject",
     short: "质疑权责不对等，反对全体纳税人为地方债务买单。",
     objective: "要求公开审计、追责违规举债，并防止全国纳税人被动买单。",
-    opening: [
-      "普通纳税人并未参与地方举债决策。",
-      "地方人大未充分审议巨额城投债务。",
-      "部分资金流向低效形象工程，并非真正惠民。",
-      "举债者不用偿债，全体纳税人被动买单，权责明显不对等。"
-    ]
+    opening: "普通纳税人未参与举债决策，却可能承担成本，权责明显不对等。"
   }
 };
 
-/* =========================
-   二、证据卡数据模块
-   effects 会影响课堂观察指标
-   ========================= */
+const phases = [
+  { title: "1. 开庭导入", instruction: "教师介绍案件背景，学生理解债务规模和公共服务风险。" },
+  { title: "2. 角色入席", instruction: "学生分组选择角色，准备本方立场。" },
+  { title: "3. 证据发放", instruction: "教师发放证据包，学生选择对本方有利的材料。" },
+  { title: "4. 首轮陈述", instruction: "各角色用30秒说明本方主张。" },
+  { title: "5. 交叉质询", instruction: "教师随机点名，各组回应质询。" },
+  { title: "6. 危机推进", instruction: "教师投放突发事件，学生调整论证。" },
+  { title: "7. 政策谈判", instruction: "学生提出配套条件，尝试形成可执行方案。" },
+  { title: "8. 最终投票", instruction: "各组投票并生成课堂知识卡。" }
+];
+
 const evidenceCards = [
-  {
-    id: "spread",
-    title: "城投债利差扩大",
-    concept: "金融稳定",
-    text: "全省城投债平均利差一个月内扩大120BP，新增融资成本快速上升。",
-    fit: ["province", "creditor"],
-    effects: { financialStability: 8, marketConfidence: 7, moralHazard: 3 }
-  },
-  {
-    id: "law",
-    title: "《预算法》约束",
-    concept: "预算纪律",
-    text: "地方政府不得违法违规举债，不得通过融资平台变相增加隐性债务。",
-    fit: ["ministry", "taxpayer"],
-    effects: { fiscalDiscipline: 10, taxpayerFairness: 6, moralHazard: -5 }
-  },
-  {
-    id: "service",
-    title: "民生服务清单",
-    concept: "公共服务",
-    text: "建投集团承担全市水务、供暖、轨道交通和棚改项目，覆盖300万市民。",
-    fit: ["province", "platform"],
-    effects: { serviceProtection: 10, publicSupport: 6, financialStability: 3 }
-  },
-  {
-    id: "audit",
-    title: "审计疑点",
-    concept: "公共问责",
-    text: "部分项目投资回报率低于贷款利率，存在低效投资和预算审议不足问题。",
-    fit: ["ministry", "taxpayer"],
-    effects: { fiscalDiscipline: 7, taxpayerFairness: 9, publicSupport: 3 }
-  },
-  {
-    id: "workers",
-    title: "就业与承包商链条",
-    concept: "就业稳定",
-    text: "集团及上下游承包商涉及约4.6万名员工，违约可能造成工资和工程款断裂。",
-    fit: ["platform", "province"],
-    effects: { serviceProtection: 6, publicSupport: 7, financialStability: 3 }
-  },
-  {
-    id: "rating",
-    title: "评级与承销材料",
-    concept: "隐性担保",
-    text: "债券发行材料多次提及地方政府支持，投资者据此形成政府兜底预期。",
-    fit: ["creditor"],
-    effects: { marketConfidence: 9, moralHazard: 6, financialStability: 4 }
-  },
-  {
-    id: "tax",
-    title: "跨地区纳税人负担",
-    concept: "财政公平",
-    text: "中央兜底意味着全国纳税人共同承担地方债务成本，涉及地区间财政公平。",
-    fit: ["taxpayer", "ministry"],
-    effects: { taxpayerFairness: 9, fiscalDiscipline: 5, moralHazard: -3 }
-  },
-  {
-    id: "case",
-    title: "遵义道桥化债案例",
-    concept: "政策先例",
-    text: "遵义道桥曾通过银行贷款重组和展期缓释债务压力，形成地方化债参考。",
-    fit: ["province", "platform"],
-    effects: { financialStability: 6, serviceProtection: 3, moralHazard: 3 }
-  },
-  {
-    id: "yongmei",
-    title: "永煤违约冲击",
-    concept: "债市波动",
-    text: "永煤违约曾明显冲击信用债市场，说明国企和地方信用事件具有传染效应。",
-    fit: ["creditor", "province"],
-    effects: { marketConfidence: 8, financialStability: 6, moralHazard: 2 }
-  }
+  { id: "spread", title: "城投债利差扩大", concept: "金融稳定", text: "全省城投债平均利差一个月内扩大120BP，新增融资成本快速上升。", fit: ["province", "creditor"], effects: { financialStability: 8, marketConfidence: 7, moralHazard: 3 } },
+  { id: "law", title: "《预算法》约束", concept: "预算纪律", text: "地方政府不得违法违规举债，不得通过融资平台变相增加隐性债务。", fit: ["ministry", "taxpayer"], effects: { fiscalDiscipline: 10, taxpayerFairness: 6, moralHazard: -5 } },
+  { id: "service", title: "民生服务清单", concept: "公共服务", text: "建投集团承担水务、供暖、轨道交通和棚改项目，覆盖300万市民。", fit: ["province", "platform"], effects: { serviceProtection: 10, publicSupport: 6, financialStability: 3 } },
+  { id: "audit", title: "审计疑点", concept: "公共问责", text: "部分项目投资回报率低于贷款利率，存在低效投资和预算审议不足问题。", fit: ["ministry", "taxpayer"], effects: { fiscalDiscipline: 7, taxpayerFairness: 9, publicSupport: 3 } },
+  { id: "workers", title: "就业与承包商链条", concept: "就业稳定", text: "集团及上下游承包商涉及约4.6万名员工，违约可能造成工资和工程款断裂。", fit: ["platform", "province"], effects: { serviceProtection: 6, publicSupport: 7, financialStability: 3 } },
+  { id: "rating", title: "评级与承销材料", concept: "隐性担保", text: "债券发行材料多次提及地方政府支持，投资者据此形成政府兜底预期。", fit: ["creditor"], effects: { marketConfidence: 9, moralHazard: 6, financialStability: 4 } },
+  { id: "tax", title: "跨地区纳税人负担", concept: "财政公平", text: "中央兜底意味着全国纳税人共同承担地方债务成本，涉及地区间财政公平。", fit: ["taxpayer", "ministry"], effects: { taxpayerFairness: 9, fiscalDiscipline: 5, moralHazard: -3 } },
+  { id: "case", title: "遵义道桥化债案例", concept: "政策先例", text: "遵义道桥曾通过银行贷款重组和展期缓释债务压力，形成地方化债参考。", fit: ["province", "platform"], effects: { financialStability: 6, serviceProtection: 3, moralHazard: 3 } }
 ];
 
-/* =========================
-   三、听证动作模块
-   effects 会改变动态评分
-   ========================= */
-const hearingActions = {
-  question: {
-    label: "提出质询",
-    theory: "质询机制体现公共决策中的信息披露与权力制衡，可以降低财政不透明带来的代理问题。",
-    effects: { fiscalDiscipline: 5, taxpayerFairness: 4, publicSupport: 2 }
-  },
-  audit: {
-    label: "要求审计",
-    theory: "专项审计能识别隐性债务和低效投资，有利于强化预算约束和政府问责。",
-    effects: { fiscalDiscipline: 8, taxpayerFairness: 7, moralHazard: -5 }
-  },
-  service: {
-    label: "保护民生",
-    theory: "基础公共服务具有准公共品属性，政府需要权衡财政纪律与公共服务连续性。",
-    effects: { serviceProtection: 9, publicSupport: 7, financialStability: 4 }
-  },
-  extension: {
-    label: "提出展期",
-    theory: "展期可以缓解短期流动性风险，但如果没有配套改革，可能只是把风险推迟。",
-    effects: { financialStability: 6, marketConfidence: 4, fiscalDiscipline: -2 }
-  },
-  accountability: {
-    label: "要求问责",
-    theory: "问责机制可以降低未来无序举债激励，回应纳税人对权责对等的要求。",
-    effects: { taxpayerFairness: 8, fiscalDiscipline: 6, moralHazard: -6 }
-  },
-  payment: {
-    label: "主张兑付",
-    theory: "刚性兑付有助于短期稳定市场信心，但长期可能削弱投资者风险识别能力。",
-    effects: { marketConfidence: 8, financialStability: 5, moralHazard: 7 }
-  }
-};
-
-/* =========================
-   四、配套条件模块
-   学生投票前可以勾选，让最终政策更接近现实谈判
-   ========================= */
-const conditions = [
-  {
-    id: "publicAudit",
-    label: "公布专项审计报告",
-    effects: { fiscalDiscipline: 8, taxpayerFairness: 8, moralHazard: -4 }
-  },
-  {
-    id: "assetSale",
-    label: "城投出售低效资产",
-    effects: { fiscalDiscipline: 6, financialStability: 3, taxpayerFairness: 4 }
-  },
-  {
-    id: "spendingCut",
-    label: "地方压缩非必要支出",
-    effects: { fiscalDiscipline: 7, taxpayerFairness: 5 }
-  },
-  {
-    id: "creditorExtension",
-    label: "债权人接受部分展期",
-    effects: { financialStability: 5, marketConfidence: -2, taxpayerFairness: 4 }
-  },
-  {
-    id: "projectStop",
-    label: "暂停新增低效基建项目",
-    effects: { fiscalDiscipline: 6, moralHazard: -5, taxpayerFairness: 5 }
-  },
-  {
-    id: "officialAccountability",
-    label: "追责违规举债责任人",
-    effects: { taxpayerFairness: 7, fiscalDiscipline: 5, moralHazard: -6 }
-  }
+const crisisEvents = [
+  { id: "market", title: "债市恐慌", text: "省内另一家城投债利差一天上升80BP，投资者开始集中抛售弱资质城投债。", prompt: "请说明金融稳定是否足以成为中央财政介入的理由。", effects: { financialStability: -10, marketConfidence: -12, moralHazard: 3 } },
+  { id: "winter", title: "供暖季临近", text: "X市即将进入供暖季，热力公司现金流紧张，市民担忧供暖服务中断。", prompt: "公共服务连续性能否压倒预算纪律？为什么？", effects: { serviceProtection: -12, publicSupport: -8, financialStability: -3 } },
+  { id: "media", title: "低效项目曝光", text: "媒体曝光建投集团曾投资多个形象工程，部分项目利用率低、回报不足。", prompt: "如果债务中包含低效项目，纳税人是否仍应承担救助成本？", effects: { taxpayerFairness: -10, fiscalDiscipline: -8, moralHazard: 8 } },
+  { id: "ministryLine", title: "财政部划红线", text: "财政部强调不得新增隐性债务，坚持谁借谁还，地方必须压实偿债责任。", prompt: "如何在不强化兜底预期的前提下避免系统性风险？", effects: { fiscalDiscipline: 10, taxpayerFairness: 6, marketConfidence: -3 } }
 ];
 
-/* =========================
-   五、课堂观察指标初始值
-   ========================= */
-let scores = {
-  financialStability: 55,
-  fiscalDiscipline: 50,
-  serviceProtection: 55,
-  taxpayerFairness: 45,
-  moralHazard: 55,
-  marketConfidence: 50,
-  publicSupport: 50
+const actions = {
+  statement: { label: "立场陈述", effects: { publicSupport: 2 }, theory: "立场陈述需要把角色利益转化为公共经济学论证。" },
+  question: { label: "提出质询", effects: { fiscalDiscipline: 5, taxpayerFairness: 4 }, theory: "质询机制体现信息披露和权力制衡。" },
+  audit: { label: "要求审计", effects: { fiscalDiscipline: 8, taxpayerFairness: 7, moralHazard: -5 }, theory: "专项审计有利于识别隐性债务和低效投资。" },
+  service: { label: "保护民生", effects: { serviceProtection: 9, publicSupport: 7, financialStability: 3 }, theory: "基础公共服务具有准公共品属性。" },
+  extension: { label: "提出展期", effects: { financialStability: 6, marketConfidence: 4, fiscalDiscipline: -2 }, theory: "展期缓解流动性风险，但可能推迟风险暴露。" },
+  accountability: { label: "要求问责", effects: { taxpayerFairness: 8, fiscalDiscipline: 6, moralHazard: -6 }, theory: "问责回应权责对等，也能降低未来举债激励。" },
+  payment: { label: "主张兑付", effects: { marketConfidence: 8, financialStability: 5, moralHazard: 7 }, theory: "刚性兑付稳定短期信心，但可能削弱风险定价。" }
 };
 
 const scoreNames = {
@@ -251,528 +95,743 @@ const scoreNames = {
   publicSupport: "公众支持"
 };
 
-/* =========================
-   六、页面元素获取
-   ========================= */
-const roleCards = document.getElementById("roleCards");
-const hearingPanel = document.getElementById("hearingPanel");
-const votePanel = document.getElementById("votePanel");
-const resultPanel = document.getElementById("resultPanel");
+const defaultScores = {
+  financialStability: 55,
+  fiscalDiscipline: 50,
+  serviceProtection: 55,
+  taxpayerFairness: 45,
+  moralHazard: 55,
+  marketConfidence: 50,
+  publicSupport: 50
+};
 
-const currentRoleLabel = document.getElementById("currentRoleLabel");
-const roleStatement = document.getElementById("roleStatement");
-const evidenceDeck = document.getElementById("evidenceDeck");
-const scoreGrid = document.getElementById("scoreGrid");
+const state = {
+  mode: "teacher",
+  phaseIndex: 0,
+  activeEventId: "",
+  selectedRole: "",
+  selectedEvidenceId: "",
+  generatedSpeech: "",
+  spotlightId: "",
+  timerLeft: 180,
+  timerInitial: 180,
+  scores: Object.assign({}, defaultScores),
+  submissions: [],
+  votes: { approve: 0, reject: 0, conditional: 0 }
+};
 
-const toneSelect = document.getElementById("toneSelect");
-const goalSelect = document.getElementById("goalSelect");
-const generatedSpeech = document.getElementById("generatedSpeech");
-const hearingRecord = document.getElementById("hearingRecord");
-const opponentReply = document.getElementById("opponentReply");
-const finishDebateBtn = document.getElementById("finishDebateBtn");
+let timerId = null;
 
-const conditionList = document.getElementById("conditionList");
-const approveBtn = document.getElementById("approveBtn");
-const rejectBtn = document.getElementById("rejectBtn");
-const voteResultText = document.getElementById("voteResultText");
-
-const impactSummary = document.getElementById("impactSummary");
-const approveMetrics = document.getElementById("approveMetrics");
-const rejectMetrics = document.getElementById("rejectMetrics");
-const teacherNote = document.getElementById("teacherNote");
-
-const theoryModal = document.getElementById("theoryModal");
+const teacherPanel = document.getElementById("teacherPanel");
+const studentPanel = document.getElementById("studentPanel");
+const teacherModeBtn = document.getElementById("teacherModeBtn");
+const studentModeBtn = document.getElementById("studentModeBtn");
+const modal = document.getElementById("modal");
 const modalTitle = document.getElementById("modalTitle");
 const modalText = document.getElementById("modalText");
 const closeModalBtn = document.getElementById("closeModalBtn");
 
-/* =========================
-   七、全局状态
-   ========================= */
-let currentRoleKey = "";
-let selectedEvidenceId = "";
-let recordList = [];
-let roundCount = 0;
-
-/* =========================
-   八、初始化角色卡片
-   ========================= */
-function renderRoleCards() {
-  roleCards.innerHTML = "";
-
-  Object.keys(roles).forEach(function (key) {
-    const role = roles[key];
-
-    const card = document.createElement("button");
-    card.className = "role-card";
-    card.style.backgroundColor = role.color;
-    card.innerHTML = `
-      <h3>${role.name}</h3>
-      <span class="tag">${role.faction}</span>
-      <span class="tendency">${role.tendency === "approve" ? "倾向：支持兜底" : "倾向：拒绝兜底"}</span>
-      <p>${role.short}</p>
-    `;
-
-    card.addEventListener("click", function () {
-      selectRole(key);
-    });
-
-    roleCards.appendChild(card);
-  });
+function render() {
+  renderMode();
+  renderTeacher();
+  renderStudent();
 }
 
-/* =========================
-   九、选择角色
-   ========================= */
-function selectRole(roleKey) {
-  currentRoleKey = roleKey;
-  selectedEvidenceId = "";
-  recordList = [];
-  roundCount = 0;
+function renderMode() {
+  teacherModeBtn.classList.toggle("active", state.mode === "teacher");
+  studentModeBtn.classList.toggle("active", state.mode === "student");
+  teacherPanel.classList.toggle("hidden", state.mode !== "teacher");
+  studentPanel.classList.toggle("hidden", state.mode !== "student");
+}
 
-  scores = {
-    financialStability: 55,
-    fiscalDiscipline: 50,
-    serviceProtection: 55,
-    taxpayerFairness: 45,
-    moralHazard: 55,
-    marketConfidence: 50,
-    publicSupport: 50
-  };
+function renderTeacher() {
+  const phase = phases[state.phaseIndex];
+  const event = getActiveEvent();
+  const spotlight = state.submissions.find(function (item) {
+    return item.id === state.spotlightId;
+  });
 
-  const role = roles[roleKey];
+  teacherPanel.innerHTML = `
+    <div class="panel-title">
+      <div>
+        <p class="section-kicker">Teacher Console</p>
+        <h2>教师控制台</h2>
+        <p>控制听证阶段、推送突发事件、点名发言、查看投票和生成课堂复盘。</p>
+      </div>
+      <span class="badge">当前阶段：${phase.title}</span>
+    </div>
 
-  currentRoleLabel.textContent = `当前身份：${role.name}（${role.faction}）`;
+    <div class="teacher-layout">
+      <div class="card">
+        <h3>一、听证流程控制</h3>
+        <div class="phase-list">
+          ${phases.map(function (item, index) {
+            return `<button class="phase-btn ${index === state.phaseIndex ? "active" : ""}" data-action="set-phase" data-index="${index}" type="button">${item.title}</button>`;
+          }).join("")}
+        </div>
 
-  roleStatement.innerHTML = `
-    <h3 style="color:${role.color};">${role.name}立场陈述</h3>
-    <p><strong>角色目标：</strong>${role.objective}</p>
-    <ul class="stance-list">
-      ${role.opening.map(function (item) {
-        return `<li>${item}</li>`;
-      }).join("")}
-    </ul>
-    <div class="role-objective">
-      <strong>课堂任务：</strong>请使用证据、质询和妥协条件，让你的角色主张更有说服力。
+        <div class="spotlight" style="margin-top:14px;">
+          <strong>阶段任务：</strong>
+          <p>${phase.instruction}</p>
+        </div>
+
+        <div class="action-row" style="margin-top:14px;">
+          <button class="action-btn primary-btn" data-action="prev-phase" type="button">上一阶段</button>
+          <button class="action-btn primary-btn" data-action="next-phase" type="button">下一阶段</button>
+          <button class="action-btn danger-btn" data-action="reset-class" type="button">重置课堂</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>二、课堂计时</h3>
+        <p><span class="timer-display">${formatSeconds(state.timerLeft)}</span></p>
+        <div class="action-row">
+          <button class="action-btn" data-action="timer-set" data-seconds="60" type="button">1分钟</button>
+          <button class="action-btn" data-action="timer-set" data-seconds="180" type="button">3分钟</button>
+          <button class="action-btn" data-action="timer-set" data-seconds="300" type="button">5分钟</button>
+          <button class="action-btn primary-btn" data-action="timer-start" type="button">开始</button>
+          <button class="action-btn" data-action="timer-pause" type="button">暂停</button>
+          <button class="action-btn" data-action="timer-reset" type="button">重置</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:16px;">
+      <div class="card">
+        <h3>三、危机推进器</h3>
+        <p class="small-text">教师投放事件后，学生端会看到新的回应任务。</p>
+        <div class="event-list">
+          ${crisisEvents.map(function (item) {
+            return `
+              <button class="event-btn ${item.id === state.activeEventId ? "active" : ""}" data-action="set-event" data-id="${item.id}" type="button">
+                <strong>${item.title}</strong>
+                <small>${item.text}</small>
+              </button>
+            `;
+          }).join("")}
+        </div>
+        <div class="action-row" style="margin-top:12px;">
+          <button class="action-btn" data-action="clear-event" type="button">撤销突发事件</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>四、当前投屏提示</h3>
+        <div class="spotlight">
+          <strong>${event ? event.title : "暂无突发事件"}</strong>
+          <p>${event ? event.text : "教师可在左侧选择一个突发事件，推动学生进行二轮回应。"}</p>
+          <p><strong>追问：</strong>${event ? event.prompt : "本案中，财政稳定、金融稳定和纳税公平应如何排序？"}</p>
+        </div>
+
+        <h3 style="margin-top:18px;">课堂观察指标</h3>
+        <div class="score-grid">${renderScoreBars()}</div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:16px;">
+      <div class="card">
+        <h3>五、学生发言池</h3>
+        <div class="action-row" style="margin-bottom:12px;">
+          <button class="action-btn gold-btn" data-action="random-spotlight" type="button">随机点名投屏</button>
+          <button class="action-btn" data-action="clear-spotlight" type="button">清空投屏</button>
+        </div>
+        <div class="record-log">
+          ${state.submissions.length ? state.submissions.map(renderSubmissionItem).join("") : `<p class="small-text">暂无学生发言。请切换到学生端提交。</p>`}
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>六、大屏展示区</h3>
+        <div class="spotlight">
+          ${spotlight ? `
+            <strong>${spotlight.groupName} · ${roles[spotlight.roleKey].name}</strong>
+            <p>${spotlight.speech}</p>
+            <p><strong>理论锚点：</strong>${spotlight.theory}</p>
+          ` : `
+            <strong>等待投屏发言</strong>
+            <p>教师可从学生发言池中选择某组发言，或点击“随机点名投屏”。</p>
+          `}
+        </div>
+
+        <h3 style="margin-top:18px;">最终投票墙</h3>
+        <div class="vote-bar-list">${renderVoteBars()}</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h3>七、课堂复盘知识卡</h3>
+      <textarea class="knowledge-card" readonly>${buildTeacherArchive()}</textarea>
     </div>
   `;
-
-  generatedSpeech.textContent = "请选择一张证据卡，再点击一个听证动作。";
-  hearingRecord.innerHTML = `<p class="empty-tip">尚未产生听证记录。</p>`;
-  opponentReply.innerHTML = `<h4>对手回应</h4><p>等待第一轮发言。</p>`;
-  voteResultText.textContent = "";
-
-  hearingPanel.classList.remove("hidden");
-  votePanel.classList.add("hidden");
-  resultPanel.classList.add("hidden");
-
-  markActiveRoleCard(roleKey);
-  renderEvidenceCards();
-  renderScores();
-  renderConditions();
-
-  hearingPanel.scrollIntoView({ behavior: "smooth" });
 }
 
-/* =========================
-   十、高亮角色卡片
-   ========================= */
-function markActiveRoleCard(roleKey) {
-  const cards = document.querySelectorAll(".role-card");
-  const keys = Object.keys(roles);
+function renderStudent() {
+  const role = state.selectedRole ? roles[state.selectedRole] : null;
+  const event = getActiveEvent();
+  const evidence = getSelectedEvidence();
 
-  cards.forEach(function (card, index) {
-    if (keys[index] === roleKey) {
-      card.classList.add("active");
-    } else {
-      card.classList.remove("active");
-    }
-  });
+  studentPanel.innerHTML = `
+    <div class="panel-title">
+      <div>
+        <p class="section-kicker">Student Terminal</p>
+        <h2>学生角色端</h2>
+        <p>选择角色、领取证据、回应教师推送事件、提交发言并完成投票。</p>
+      </div>
+      <span class="badge">当前阶段：${phases[state.phaseIndex].title}</span>
+    </div>
+
+    <div class="card">
+      <h3>教师当前指令</h3>
+      <p>${phases[state.phaseIndex].instruction}</p>
+      <div class="spotlight">
+        <strong>${event ? event.title : "暂无突发事件"}</strong>
+        <p>${event ? event.text : "请先根据本角色初始立场准备开场陈述。"}</p>
+        <p><strong>教师追问：</strong>${event ? event.prompt : "你代表的角色为什么支持或反对中央兜底？"}</p>
+      </div>
+    </div>
+
+    <div class="student-layout" style="margin-top:16px;">
+      <div class="card">
+        <h3>一、选择角色</h3>
+        <div class="role-grid">
+          ${Object.keys(roles).map(function (key) {
+            const item = roles[key];
+            return `
+              <button class="role-btn ${state.selectedRole === key ? "active" : ""}" style="background:${item.color};" data-action="select-role" data-role="${key}" type="button">
+                <h3>${item.name}</h3>
+                <span>${item.faction}</span>
+                <p>${item.short}</p>
+              </button>
+            `;
+          }).join("")}
+        </div>
+
+        ${role ? `
+          <div class="spotlight" style="margin-top:14px;">
+            <strong>${role.name}任务</strong>
+            <p>${role.objective}</p>
+            <p><strong>初始立场：</strong>${role.opening}</p>
+          </div>
+        ` : ""}
+      </div>
+
+      <div class="card">
+        <h3>二、选择证据</h3>
+        <p class="small-text">推荐证据会优先显示，但你也可以选择其他证据进行反向论证。</p>
+        <div class="evidence-grid">
+          ${renderEvidenceButtons()}
+        </div>
+
+        ${evidence ? `
+          <div class="spotlight" style="margin-top:14px;">
+            <strong>${evidence.title}</strong>
+            <p>${evidence.text}</p>
+            <p><strong>知识点：</strong>${evidence.concept}</p>
+          </div>
+        ` : ""}
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:16px;">
+      <div class="card">
+        <h3>三、生成并提交发言</h3>
+
+        <div class="input-grid">
+          <div>
+            <label for="groupName">小组 / 学生姓名</label>
+            <input id="groupName" type="text" placeholder="例如：第三组" />
+          </div>
+          <div>
+            <label for="speechTone">发言语气</label>
+            <select id="speechTone">
+              <option value="理性陈述">理性陈述</option>
+              <option value="强硬质询">强硬质询</option>
+              <option value="民生诉求">民生诉求</option>
+              <option value="协商谈判">协商谈判</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="full-input">
+          <label for="speechAction">发言动作</label>
+          <select id="speechAction">
+            ${Object.keys(actions).map(function (key) {
+              return `<option value="${key}">${actions[key].label}</option>`;
+            }).join("")}
+          </select>
+        </div>
+
+        <div class="action-row" style="margin:12px 0;">
+          <button class="action-btn primary-btn" data-action="generate-speech" type="button">生成发言</button>
+          <button class="action-btn gold-btn" data-action="submit-speech" type="button">提交到教师端</button>
+        </div>
+
+        <textarea id="studentSpeech" placeholder="点击“生成发言”，也可以手动修改。">${state.generatedSpeech}</textarea>
+      </div>
+
+      <div class="card">
+        <h3>四、角色投票</h3>
+        <p class="small-text">投票会进入教师端投票墙。</p>
+        <div class="vote-options">
+          <button class="vote-btn primary-btn" data-action="student-vote" data-vote="approve" type="button">批准300亿特别再融资债兜底</button>
+          <button class="vote-btn" data-action="student-vote" data-vote="reject" type="button">拒绝兜底，地方自行化债</button>
+          <button class="vote-btn gold-btn" data-action="student-vote" data-vote="conditional" type="button">附条件救助：审计、展期、问责并行</button>
+        </div>
+
+        <h3 style="margin-top:18px;">课堂知识卡</h3>
+        <textarea class="knowledge-card" readonly>${buildStudentArchive()}</textarea>
+      </div>
+    </div>
+  `;
 }
 
-/* =========================
-   十一、渲染证据卡
-   ========================= */
-function renderEvidenceCards() {
-  evidenceDeck.innerHTML = "";
-
-  const sortedCards = evidenceCards.slice().sort(function (a, b) {
-    const aFit = a.fit.includes(currentRoleKey) ? 1 : 0;
-    const bFit = b.fit.includes(currentRoleKey) ? 1 : 0;
+function renderEvidenceButtons() {
+  const sorted = evidenceCards.slice().sort(function (a, b) {
+    const aFit = state.selectedRole && a.fit.includes(state.selectedRole) ? 1 : 0;
+    const bFit = state.selectedRole && b.fit.includes(state.selectedRole) ? 1 : 0;
     return bFit - aFit;
   });
 
-  sortedCards.forEach(function (card) {
-    const btn = document.createElement("button");
-    btn.className = "evidence-card";
-    if (card.id === selectedEvidenceId) {
-      btn.classList.add("active");
-    }
-
-    const recommendText = card.fit.includes(currentRoleKey) ? "推荐证据" : "可用证据";
-
-    btn.innerHTML = `
-      <span class="concept-tag">${recommendText}：${card.concept}</span>
-      <h4>${card.title}</h4>
-      <p>${card.text}</p>
+  return sorted.map(function (item) {
+    const recommended = state.selectedRole && item.fit.includes(state.selectedRole);
+    return `
+      <button class="evidence-btn ${state.selectedEvidenceId === item.id ? "active" : ""}" data-action="select-evidence" data-id="${item.id}" type="button">
+        <strong>${item.title}</strong>
+        <small>${recommended ? "推荐证据" : "可用证据"} · ${item.concept}</small>
+      </button>
     `;
-
-    btn.addEventListener("click", function () {
-      selectedEvidenceId = card.id;
-      renderEvidenceCards();
-      showTheoryModal("证据卡已选择", `你选择了“${card.title}”。它对应的课程知识点是：${card.concept}。`);
-    });
-
-    evidenceDeck.appendChild(btn);
-  });
+  }).join("");
 }
 
-/* =========================
-   十二、渲染课堂观察指标
-   ========================= */
-function renderScores() {
-  scoreGrid.innerHTML = "";
-
-  Object.keys(scores).forEach(function (key) {
-    const value = clamp(scores[key], 0, 100);
-    const item = document.createElement("div");
-    item.className = "score-item";
-    item.innerHTML = `
-      <div class="score-label">
-        <span>${scoreNames[key]}</span>
-        <strong>${value}</strong>
-      </div>
-      <div class="score-bar">
-        <div class="score-fill" style="width:${value}%; background:${getScoreColor(key, value)};"></div>
+function renderScoreBars() {
+  return Object.keys(state.scores).map(function (key) {
+    const value = clamp(state.scores[key], 0, 100);
+    return `
+      <div>
+        <div class="score-label">
+          <span>${scoreNames[key]}</span>
+          <strong>${value}</strong>
+        </div>
+        <div class="score-bar">
+          <div class="score-fill" style="width:${value}%; background:${getScoreColor(key, value)};"></div>
+        </div>
       </div>
     `;
-
-    scoreGrid.appendChild(item);
-  });
+  }).join("");
 }
 
-/* =========================
-   十三、评分颜色
-   ========================= */
-function getScoreColor(key, value) {
-  if (key === "moralHazard") {
-    return value > 70 ? "#b91c1c" : value > 45 ? "#f97316" : "#16a34a";
-  }
-
-  if (value >= 70) {
-    return "#16a34a";
-  }
-
-  if (value >= 45) {
-    return "#1d4ed8";
-  }
-
-  return "#b91c1c";
-}
-
-/* =========================
-   十四、听证动作按钮事件
-   ========================= */
-document.querySelectorAll(".action-btn").forEach(function (button) {
-  button.addEventListener("click", function () {
-    const actionKey = button.dataset.action;
-    performHearingAction(actionKey);
-  });
-});
-
-/* =========================
-   十五、执行一轮听证发言
-   ========================= */
-function performHearingAction(actionKey) {
-  if (!currentRoleKey) {
-    alert("请先选择一个角色。");
-    return;
-  }
-
-  if (!selectedEvidenceId) {
-    alert("请先选择一张证据卡。");
-    return;
-  }
-
-  const role = roles[currentRoleKey];
-  const action = hearingActions[actionKey];
-  const evidence = evidenceCards.find(function (item) {
-    return item.id === selectedEvidenceId;
-  });
-
-  roundCount++;
-
-  applyEffects(action.effects);
-  applyEffects(evidence.effects);
-
-  const speech = generateSpeech(role, action, evidence);
-  const reply = generateOpponentReply(actionKey, evidence);
-
-  generatedSpeech.textContent = speech;
-  opponentReply.innerHTML = `
-    <h4>对手回应</h4>
-    <p>${reply}</p>
+function renderSubmissionItem(item) {
+  const role = roles[item.roleKey];
+  return `
+    <div class="record-item">
+      <strong>${item.groupName} · ${role.name} · ${item.actionLabel}</strong>
+      <p>${item.speech}</p>
+      <div class="action-row">
+        <button class="mini-btn" data-action="spotlight" data-id="${item.id}" type="button">投屏展示</button>
+      </div>
+    </div>
   `;
+}
 
-  recordList.push({
-    round: roundCount,
-    role: role.name,
-    action: action.label,
-    evidence: evidence.title,
+function renderVoteBars() {
+  const labels = {
+    approve: "批准兜底",
+    reject: "拒绝兜底",
+    conditional: "附条件救助"
+  };
+  const colors = {
+    approve: "#1d4ed8",
+    reject: "#374151",
+    conditional: "#8a6f3d"
+  };
+  const total = state.votes.approve + state.votes.reject + state.votes.conditional;
+
+  return Object.keys(labels).map(function (key) {
+    const count = state.votes[key];
+    const percent = total ? Math.round(count / total * 100) : 0;
+    return `
+      <div class="vote-row">
+        <span>${labels[key]}</span>
+        <div class="vote-track">
+          <div class="vote-fill" style="width:${percent}%; background:${colors[key]};"></div>
+        </div>
+        <strong>${count}票</strong>
+      </div>
+    `;
+  }).join("");
+}
+
+function buildTeacherArchive() {
+  const event = getActiveEvent();
+  const totalVotes = state.votes.approve + state.votes.reject + state.votes.conditional;
+  const topVote = getTopVote();
+
+  return [
+    "【X市建投集团300亿债务危机课堂复盘】",
+    "",
+    `当前阶段：${phases[state.phaseIndex].title}`,
+    `突发事件：${event ? event.title : "暂无"}`,
+    `学生发言数：${state.submissions.length}条`,
+    `总投票数：${totalVotes}票`,
+    `当前多数意见：${topVote}`,
+    "",
+    "公共经济学复盘：",
+    "本案的关键不是简单判断救或不救，而是分析谁决策、谁受益、谁承担成本，以及债务风险是否会通过金融市场和公共服务外溢。",
+    "若批准兜底，需要配套审计、问责和资产处置，以压低道德风险。",
+    "若拒绝兜底，需要设计流动性缓冲和公共服务保障，避免风险扩散。"
+  ].join("\n");
+}
+
+function buildStudentArchive() {
+  if (!state.selectedRole) {
+    return "请先选择角色。";
+  }
+
+  const role = roles[state.selectedRole];
+  const evidence = getSelectedEvidence();
+  const event = getActiveEvent();
+
+  return [
+    `【${role.name}课堂知识卡】`,
+    "",
+    `角色派系：${role.faction}`,
+    `核心立场：${role.opening}`,
+    `当前证据：${evidence ? evidence.title : "尚未选择"}`,
+    `突发事件：${event ? event.title : "暂无"}`,
+    "",
+    "分析框架：",
+    "事实：X市建投集团存在1500亿总债务，其中300亿半年内集中到期。",
+    `机制：${evidence ? evidence.concept : "隐性担保、金融稳定、预算约束"}影响各方行为。`,
+    "规范：需要权衡纳税公平、公共服务连续性和权责对等。",
+    "政策：本组应提出是否兜底及其配套条件。"
+  ].join("\n");
+}
+
+function generateSpeech() {
+  if (!state.selectedRole) {
+    showModal("请先选择角色", "学生端需要先选择一个听证会角色。");
+    return;
+  }
+
+  if (!state.selectedEvidenceId) {
+    showModal("请先选择证据", "发言必须基于至少一张证据卡。");
+    return;
+  }
+
+  const groupName = getInputValue("groupName") || "本组";
+  const tone = getInputValue("speechTone") || "理性陈述";
+  const actionKey = getInputValue("speechAction") || "statement";
+  const role = roles[state.selectedRole];
+  const evidence = getSelectedEvidence();
+  const event = getActiveEvent();
+  const action = actions[actionKey];
+
+  state.generatedSpeech =
+    `${groupName}以“${role.name}”身份进行${tone}。` +
+    `本方采取“${action.label}”策略。` +
+    `事实层面，我们引用“${evidence.title}”：${evidence.text}` +
+    `机制层面，该证据指向“${evidence.concept}”。` +
+    (event ? `面对教师推送的“${event.title}”事件，本方认为必须回应：${event.prompt}` : "") +
+    `规范层面，本案应同时考虑金融稳定、财政纪律、民生保障与纳税公平。` +
+    `政策层面，本方主张在明确责任边界和配套条件后推进决策。`;
+
+  render();
+}
+
+function submitSpeech() {
+  if (!state.selectedRole || !state.selectedEvidenceId) {
+    showModal("无法提交", "请先选择角色和证据，并生成发言。");
+    return;
+  }
+
+  const textArea = document.getElementById("studentSpeech");
+  const speech = textArea ? textArea.value.trim() : state.generatedSpeech;
+
+  if (!speech) {
+    showModal("暂无发言", "请先生成或手动填写发言内容。");
+    return;
+  }
+
+  const groupName = getInputValue("groupName") || "未命名小组";
+  const actionKey = getInputValue("speechAction") || "statement";
+  const action = actions[actionKey];
+  const evidence = getSelectedEvidence();
+
+  state.generatedSpeech = speech;
+  state.submissions.unshift({
+    id: String(Date.now()),
+    groupName: groupName,
+    roleKey: state.selectedRole,
+    evidenceId: state.selectedEvidenceId,
+    actionLabel: action.label,
     speech: speech,
     theory: action.theory
   });
 
-  renderRecord();
-  renderScores();
+  applyEffects(action.effects);
+  applyEffects(evidence.effects);
 
-  showTheoryModal(`理论解读：${evidence.concept}`, action.theory);
+  showModal("提交成功", "发言已进入教师端发言池，老师可以点名投屏。");
+  render();
 }
 
-/* =========================
-   十六、生成学生角色发言
-   ========================= */
-function generateSpeech(role, action, evidence) {
-  const studentName = document.getElementById("studentName").value.trim() || "本组代表";
-  const tone = toneSelect.value;
-  const goal = goalSelect.value;
+function studentVote(voteType) {
+  if (!state.selectedRole) {
+    showModal("请先选择角色", "投票前需要先选择你的角色身份。");
+    return;
+  }
 
-  return `${studentName}以“${role.name}”身份进行${tone}：本方选择“${action.label}”，目标是“${goal}”。` +
-    `我们引用的关键证据是“${evidence.title}”：${evidence.text}` +
-    `基于${evidence.concept}视角，本方认为，听证会不能只讨论300亿元是否偿还，` +
-    `更要讨论地方政府债务、隐性担保、财政纪律、金融稳定与纳税人公平之间的权衡。`;
+  state.votes[voteType]++;
+  showModal("投票成功", "你的投票已进入教师端投票墙。");
+  render();
 }
 
-/* =========================
-   十七、生成对手回应
-   ========================= */
-function generateOpponentReply(actionKey, evidence) {
-  const opponentKeys = Object.keys(roles).filter(function (key) {
-    return key !== currentRoleKey;
-  });
-
-  const opponentKey = opponentKeys[roundCount % opponentKeys.length];
-  const opponent = roles[opponentKey];
-
-  const responseMap = {
-    question: "你的质询提出了信息披露问题，但仍需说明短期违约风险由谁承担。",
-    audit: "审计是必要的，但审计不能替代眼前的流动性安排。",
-    service: "公共服务必须保护，但不能因此默认所有债务都由中央买单。",
-    extension: "展期能缓解压力，但如果没有约束条件，可能只是推迟风险暴露。",
-    accountability: "问责能够回应公众关切，但也要避免在危机中造成决策停摆。",
-    payment: "全额兑付有利于市场信心，但也可能继续强化刚性兑付预期。"
-  };
-
-  return `${opponent.name}回应：${responseMap[actionKey]}围绕“${evidence.title}”这张证据，` +
-    `本方认为还需要进一步区分公共服务责任、融资平台责任和投资者风险责任。`;
-}
-
-/* =========================
-   十八、渲染听证记录
-   ========================= */
-function renderRecord() {
-  hearingRecord.innerHTML = "";
-
-  recordList.forEach(function (item) {
-    const div = document.createElement("div");
-    div.className = "record-item";
-    div.innerHTML = `
-      <strong>第${item.round}轮：${item.role} - ${item.action}</strong>
-      <p><em>使用证据：</em>${item.evidence}</p>
-      <p>${item.speech}</p>
-      <p><em>理论锚点：</em>${item.theory}</p>
-    `;
-    hearingRecord.appendChild(div);
-  });
-
-  hearingRecord.scrollTop = hearingRecord.scrollHeight;
-}
-
-/* =========================
-   十九、应用指标变化
-   ========================= */
 function applyEffects(effects) {
   Object.keys(effects).forEach(function (key) {
-    scores[key] = clamp(scores[key] + effects[key], 0, 100);
+    state.scores[key] = clamp(state.scores[key] + effects[key], 0, 100);
   });
 }
 
-/* =========================
-   二十、渲染配套条件
-   ========================= */
-function renderConditions() {
-  conditionList.innerHTML = "";
-
-  conditions.forEach(function (condition) {
-    const label = document.createElement("label");
-    label.className = "condition-item";
-    label.innerHTML = `
-      <input type="checkbox" value="${condition.id}" />
-      <span>${condition.label}</span>
-    `;
-
-    conditionList.appendChild(label);
-  });
+function setEvent(eventId) {
+  state.activeEventId = eventId;
+  const event = getActiveEvent();
+  if (event) {
+    applyEffects(event.effects);
+    showModal("教师推送突发事件", `${event.title}：${event.prompt}`);
+  }
+  render();
 }
 
-/* =========================
-   二十一、进入投票
-   ========================= */
-finishDebateBtn.addEventListener("click", function () {
-  if (!currentRoleKey) {
-    alert("请先选择角色。");
+function randomSpotlight() {
+  if (!state.submissions.length) {
+    showModal("暂无发言", "请先让学生端提交至少一条发言。");
     return;
   }
 
-  votePanel.classList.remove("hidden");
-  votePanel.scrollIntoView({ behavior: "smooth" });
-});
-
-/* =========================
-   二十二、投票事件
-   ========================= */
-approveBtn.addEventListener("click", function () {
-  vote("approve");
-});
-
-rejectBtn.addEventListener("click", function () {
-  vote("reject");
-});
-
-/* =========================
-   二十三、投票并计算结果
-   ========================= */
-function vote(policy) {
-  if (!currentRoleKey) {
-    alert("请先选择角色。");
-    return;
-  }
-
-  const finalScores = getScoresWithConditions();
-  const role = roles[currentRoleKey];
-
-  const policyName = policy === "approve"
-    ? "批准300亿特别再融资债兜底"
-    : "拒绝兜底，要求地方自行化债";
-
-  const tendencyText = role.tendency === policy
-    ? "该选择符合你的角色默认立场。"
-    : "该选择偏离你的角色默认立场，适合用于课堂反思。";
-
-  voteResultText.textContent = `你以“${role.name}”身份投票：${policyName}。${tendencyText}`;
-
-  renderResults(policy, finalScores);
-  resultPanel.classList.remove("hidden");
-  resultPanel.scrollIntoView({ behavior: "smooth" });
+  const randomIndex = Math.floor(Math.random() * state.submissions.length);
+  state.spotlightId = state.submissions[randomIndex].id;
+  render();
 }
 
-/* =========================
-   二十四、叠加配套条件后的指标
-   ========================= */
-function getScoresWithConditions() {
-  const finalScores = Object.assign({}, scores);
-  const checked = document.querySelectorAll("#conditionList input:checked");
+function startTimer() {
+  if (timerId) return;
 
-  checked.forEach(function (checkbox) {
-    const condition = conditions.find(function (item) {
-      return item.id === checkbox.value;
-    });
+  timerId = setInterval(function () {
+    state.timerLeft = Math.max(0, state.timerLeft - 1);
+    renderTeacher();
 
-    Object.keys(condition.effects).forEach(function (key) {
-      finalScores[key] = clamp(finalScores[key] + condition.effects[key], 0, 100);
-    });
+    if (state.timerLeft === 0) {
+      pauseTimer();
+      showModal("讨论时间到", "请学生用一句话说明本轮最核心的公共经济学冲突。");
+    }
+  }, 1000);
+}
+
+function pauseTimer() {
+  if (timerId) {
+    clearInterval(timerId);
+    timerId = null;
+  }
+}
+
+function resetTimer() {
+  pauseTimer();
+  state.timerLeft = state.timerInitial;
+  render();
+}
+
+function resetClass() {
+  pauseTimer();
+  state.phaseIndex = 0;
+  state.activeEventId = "";
+  state.selectedRole = "";
+  state.selectedEvidenceId = "";
+  state.generatedSpeech = "";
+  state.spotlightId = "";
+  state.timerLeft = 180;
+  state.timerInitial = 180;
+  state.scores = Object.assign({}, defaultScores);
+  state.submissions = [];
+  state.votes = { approve: 0, reject: 0, conditional: 0 };
+  render();
+}
+
+function getActiveEvent() {
+  return crisisEvents.find(function (item) {
+    return item.id === state.activeEventId;
+  });
+}
+
+function getSelectedEvidence() {
+  return evidenceCards.find(function (item) {
+    return item.id === state.selectedEvidenceId;
+  });
+}
+
+function getInputValue(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : "";
+}
+
+function getTopVote() {
+  const voteMap = {
+    approve: "批准兜底",
+    reject: "拒绝兜底",
+    conditional: "附条件救助"
+  };
+
+  const keys = Object.keys(state.votes);
+  let topKey = keys[0];
+
+  keys.forEach(function (key) {
+    if (state.votes[key] > state.votes[topKey]) {
+      topKey = key;
+    }
   });
 
-  return finalScores;
-}
-
-/* =========================
-   二十五、结果测算
-   ========================= */
-function renderResults(policy, finalScores) {
-  const approveCost = clamp(160 - finalScores.financialStability, 40, 180);
-  const rejectCost = clamp(110 + finalScores.marketConfidence / 2, 120, 210);
-
-  const approveTaxBurden = clamp(300 - finalScores.fiscalDiscipline / 4, 260, 300);
-  const rejectTaxBurden = clamp(30 - finalScores.taxpayerFairness / 5, 0, 30);
-
-  const approveServiceRisk = clamp(35 - finalScores.serviceProtection / 3, 3, 30);
-  const rejectServiceRisk = clamp(65 - finalScores.serviceProtection / 4, 25, 70);
-
-  const approveBondRisk = clamp(45 - finalScores.marketConfidence / 3, 5, 40);
-  const rejectBondRisk = clamp(85 - finalScores.marketConfidence / 4, 35, 80);
-
-  const approveMoralRisk = clamp(finalScores.moralHazard + 15, 30, 95);
-  const rejectMoralRisk = clamp(finalScores.moralHazard - 20, 5, 75);
-
-  const approveJobs = clamp(8000 - finalScores.serviceProtection * 60, 1500, 8000);
-  const rejectJobs = clamp(65000 - finalScores.financialStability * 350, 25000, 65000);
-
-  approveMetrics.innerHTML = `
-    <li>全省融资成本变化：预计下降约${approveCost}个基点</li>
-    <li>全国纳税人新增财政负担：约${Math.round(approveTaxBurden)}亿元</li>
-    <li>民生服务中断风险：约${Math.round(approveServiceRisk)}%</li>
-    <li>债市波动风险：约${Math.round(approveBondRisk)}%</li>
-    <li>潜在失业与欠薪冲击：约${Math.round(approveJobs)}人</li>
-    <li>道德风险指数：${Math.round(approveMoralRisk)} / 100</li>
-  `;
-
-  rejectMetrics.innerHTML = `
-    <li>全省融资成本变化：预计上升约${Math.round(rejectCost)}个基点</li>
-    <li>全国纳税人新增财政负担：约${Math.round(rejectTaxBurden)}亿元</li>
-    <li>民生服务中断风险：约${Math.round(rejectServiceRisk)}%</li>
-    <li>债市波动风险：约${Math.round(rejectBondRisk)}%</li>
-    <li>潜在失业与欠薪冲击：约${Math.round(rejectJobs)}人</li>
-    <li>道德风险指数：${Math.round(rejectMoralRisk)} / 100</li>
-  `;
-
-  const checkedCount = document.querySelectorAll("#conditionList input:checked").length;
-
-  impactSummary.innerHTML = `
-    <strong>本次听证会动态摘要：</strong>
-    你共进行了 ${recordList.length} 轮实质发言，选择了 ${checkedCount} 项配套条件。
-    当前模拟结果显示，${policy === "approve" ? "批准兜底更有利于短期稳定和公共服务连续性" : "拒绝兜底更有利于强化预算纪律和纳税公平"}。
-    但无论选择哪一项，都需要处理金融稳定、财政纪律、民生保障和纳税公平之间的冲突。
-  `;
-
-  teacherNote.innerHTML = `
-    <strong>课堂讨论提示：</strong>
-    本案例没有唯一标准答案。公共经济学的关键不是简单判断“救”或“不救”，
-    而是说明谁承担成本、谁获得收益、谁拥有决策权、风险是否外溢，以及制度如何防止下一轮隐性债务扩张。
-  `;
-}
-
-/* =========================
-   二十六、理论弹窗
-   ========================= */
-function showTheoryModal(title, text) {
-  modalTitle.textContent = title;
-  modalText.textContent = text;
-  theoryModal.classList.remove("hidden");
-}
-
-function closeTheoryModal() {
-  theoryModal.classList.add("hidden");
-}
-
-closeModalBtn.addEventListener("click", closeTheoryModal);
-
-theoryModal.addEventListener("click", function (event) {
-  if (event.target === theoryModal) {
-    closeTheoryModal();
+  if (state.votes[topKey] === 0) {
+    return "尚未形成多数意见";
   }
-});
 
-/* =========================
-   二十七、工具函数
-   ========================= */
+  return voteMap[topKey];
+}
+
+function getScoreColor(key, value) {
+  if (key === "moralHazard") {
+    return value > 70 ? "#b91c1c" : value > 45 ? "#f97316" : "#16a34a";
+  }
+  if (value >= 70) return "#16a34a";
+  if (value >= 45) return "#1d4ed8";
+  return "#b91c1c";
+}
+
+function formatSeconds(seconds) {
+  const minute = String(Math.floor(seconds / 60)).padStart(2, "0");
+  const second = String(seconds % 60).padStart(2, "0");
+  return `${minute}:${second}`;
+}
+
 function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
 }
 
-/* =========================
-   二十八、页面启动
-   ========================= */
-renderRoleCards();
-renderScores();
-renderConditions();
+function showModal(title, text) {
+  modalTitle.textContent = title;
+  modalText.textContent = text;
+  modal.classList.remove("hidden");
+}
+
+function closeModal() {
+  modal.classList.add("hidden");
+}
+
+teacherModeBtn.addEventListener("click", function () {
+  state.mode = "teacher";
+  render();
+});
+
+studentModeBtn.addEventListener("click", function () {
+  state.mode = "student";
+  render();
+});
+
+closeModalBtn.addEventListener("click", closeModal);
+
+modal.addEventListener("click", function (event) {
+  if (event.target === modal) {
+    closeModal();
+  }
+});
+
+document.addEventListener("click", function (event) {
+  const target = event.target.closest("[data-action]");
+  if (!target) return;
+
+  const action = target.dataset.action;
+
+  if (action === "set-phase") {
+    state.phaseIndex = Number(target.dataset.index);
+    render();
+  }
+
+  if (action === "prev-phase") {
+    state.phaseIndex = Math.max(0, state.phaseIndex - 1);
+    render();
+  }
+
+  if (action === "next-phase") {
+    state.phaseIndex = Math.min(phases.length - 1, state.phaseIndex + 1);
+    render();
+  }
+
+  if (action === "set-event") {
+    setEvent(target.dataset.id);
+  }
+
+  if (action === "clear-event") {
+    state.activeEventId = "";
+    render();
+  }
+
+  if (action === "timer-set") {
+    state.timerInitial = Number(target.dataset.seconds);
+    state.timerLeft = state.timerInitial;
+    resetTimer();
+  }
+
+  if (action === "timer-start") {
+    startTimer();
+  }
+
+  if (action === "timer-pause") {
+    pauseTimer();
+  }
+
+  if (action === "timer-reset") {
+    resetTimer();
+  }
+
+  if (action === "random-spotlight") {
+    randomSpotlight();
+  }
+
+  if (action === "clear-spotlight") {
+    state.spotlightId = "";
+    render();
+  }
+
+  if (action === "spotlight") {
+    state.spotlightId = target.dataset.id;
+    render();
+  }
+
+  if (action === "reset-class") {
+    resetClass();
+  }
+
+  if (action === "select-role") {
+    state.selectedRole = target.dataset.role;
+    state.selectedEvidenceId = "";
+    state.generatedSpeech = "";
+    render();
+  }
+
+  if (action === "select-evidence") {
+    state.selectedEvidenceId = target.dataset.id;
+    render();
+  }
+
+  if (action === "generate-speech") {
+    generateSpeech();
+  }
+
+  if (action === "submit-speech") {
+    submitSpeech();
+  }
+
+  if (action === "student-vote") {
+    studentVote(target.dataset.vote);
+  }
+});
+
+render();
