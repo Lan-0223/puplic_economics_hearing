@@ -1,6 +1,3 @@
-/* =========================
-   基础页面样式
-   ========================= */
 * {
   box-sizing: border-box;
 }
@@ -9,13 +6,14 @@ body {
   margin: 0;
   font-family: "Microsoft YaHei", Arial, sans-serif;
   color: #1f2933;
-  background: #f5f7fb;
-  line-height: 1.6;
+  background: #f4f5f2;
+  line-height: 1.65;
 }
 
 button,
 input,
-select {
+select,
+textarea {
   font-family: inherit;
 }
 
@@ -24,72 +22,97 @@ button {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
-.small-text {
-  color: #667085;
-  font-size: 14px;
-}
-
-/* =========================
-   顶部标题区
-   ========================= */
 .topbar {
-  background: #16202a;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 18px;
+  align-items: center;
+  background: #101820;
   color: white;
-  padding: 24px 32px;
-  border-bottom: 5px solid #b91c1c;
+  padding: 22px 32px;
+  border-bottom: 4px solid #8a6f3d;
+}
+
+.brand-mark {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  color: #f5d27a;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.eyebrow,
+.section-kicker {
+  margin: 0 0 6px;
+  color: #8a6f3d;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.topbar .eyebrow {
+  color: #e9d39b;
 }
 
 .topbar h1 {
   margin: 0;
-  font-size: 28px;
+  font-size: 26px;
 }
 
 .topbar p {
   margin: 6px 0 0;
-  color: #cbd5e1;
+  color: #d6dde4;
 }
 
-/* =========================
-   页面主容器
-   ========================= */
+.mode-switch {
+  display: flex;
+  gap: 8px;
+}
+
+.mode-btn {
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: transparent;
+  color: white;
+  border-radius: 6px;
+  padding: 9px 12px;
+}
+
+.mode-btn.active {
+  background: #f5d27a;
+  color: #101820;
+  border-color: #f5d27a;
+}
+
 .page-shell {
   width: min(1120px, calc(100% - 48px));
   margin: 28px auto 80px;
   padding-right: 210px;
 }
 
+.hero-section,
 .section-block,
-.hero-section {
-  background: white;
-  border: 1px solid #dbe2ea;
+.app-panel {
+  background: #fffefa;
+  border: 1px solid #d8d6cc;
   border-radius: 8px;
   padding: 26px;
   margin-bottom: 24px;
   box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
 }
 
-.section-title h2 {
-  margin: 0 0 6px;
-  font-size: 22px;
-}
-
-.section-title p {
-  margin: 0 0 18px;
-  color: #667085;
-}
-
-/* =========================
-   首页背景区
-   ========================= */
 .opening-text {
-  width: 100%;
   overflow: hidden;
-  border-left: 5px solid #b91c1c;
+  border-left: 5px solid #8a6f3d;
   padding: 10px 14px;
-  background: #fff5f5;
+  background: #fbf6e8;
   margin-bottom: 22px;
   font-weight: bold;
 }
@@ -101,43 +124,24 @@ button {
 }
 
 @keyframes typing {
-  from {
-    width: 0;
-  }
-
-  to {
-    width: 100%;
-  }
+  from { width: 0; }
+  to { width: 100%; }
 }
 
 .hero-grid {
   display: grid;
   grid-template-columns: 1.35fr 1fr;
   gap: 24px;
-  align-items: start;
 }
 
-.hero-copy h2 {
+.hero-grid h2 {
   margin-top: 0;
-  font-size: 24px;
+  font-size: 26px;
+  line-height: 1.35;
 }
 
-.hero-copy strong {
+.hero-grid strong {
   color: #b91c1c;
-}
-
-.student-box {
-  margin-top: 18px;
-  display: grid;
-  gap: 8px;
-}
-
-.student-box input {
-  width: 100%;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-  padding: 11px 12px;
-  font-size: 15px;
 }
 
 .data-board {
@@ -148,10 +152,10 @@ button {
 
 .data-card {
   min-height: 112px;
-  border: 1px solid #dbe2ea;
+  border: 1px solid #d8d6cc;
   border-radius: 8px;
   padding: 16px;
-  background: #f8fafc;
+  background: #f8f7f2;
 }
 
 .data-card span {
@@ -171,55 +175,38 @@ button {
   color: #b91c1c;
 }
 
-/* =========================
-   知识点悬浮提示
-   ========================= */
-.concept-row {
-  display: flex;
-  flex-wrap: wrap;
+.method-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 12px;
   margin-top: 22px;
 }
 
-.concept-btn {
-  position: relative;
-  border: 1px solid #9aa8b8;
+.method-strip div {
+  border: 1px solid #d8d6cc;
+  border-radius: 8px;
   background: #ffffff;
-  color: #1f2933;
-  padding: 9px 14px;
-  border-radius: 6px;
+  padding: 12px;
 }
 
-.concept-btn:hover {
-  background: #eef4ff;
-  border-color: #2563eb;
+.method-strip strong,
+.method-strip span {
+  display: block;
 }
 
-.concept-btn:hover::after {
-  content: attr(data-tip);
-  position: absolute;
-  left: 0;
-  bottom: 120%;
-  width: 280px;
-  background: #111827;
-  color: white;
-  padding: 10px;
-  border-radius: 6px;
-  font-size: 13px;
-  text-align: left;
-  z-index: 20;
+.method-strip span {
+  margin-top: 4px;
+  color: #667085;
+  font-size: 14px;
 }
 
-/* =========================
-   右侧知识点侧边栏
-   ========================= */
 .knowledge-sidebar {
   position: fixed;
   top: 108px;
   right: 22px;
   width: 190px;
-  background: #ffffff;
-  border: 1px solid #dbe2ea;
+  background: #fffefa;
+  border: 1px solid #d8d6cc;
   border-radius: 8px;
   padding: 16px;
   box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
@@ -228,7 +215,23 @@ button {
 
 .knowledge-sidebar h2 {
   margin: 0 0 10px;
-  font-size: 18px;
+  font-size: 17px;
+}
+
+.knowledge-sidebar dl {
+  margin: 0 0 16px;
+}
+
+.knowledge-sidebar dt {
+  font-size: 13px;
+  color: #8a6f3d;
+  font-weight: bold;
+}
+
+.knowledge-sidebar dd {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: #475467;
 }
 
 .knowledge-sidebar ul {
@@ -241,120 +244,210 @@ button {
   margin-bottom: 6px;
 }
 
-/* =========================
-   角色选择卡片
-   ========================= */
-.role-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 14px;
+.panel-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+  margin-bottom: 18px;
 }
 
-.role-card {
-  min-height: 230px;
-  border: 2px solid transparent;
+.panel-title h2 {
+  margin: 0 0 6px;
+  font-size: 24px;
+}
+
+.panel-title p {
+  margin: 0;
+  color: #667085;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 5px 9px;
+  background: #eef2ff;
+  color: #3730a3;
+  font-size: 13px;
+}
+
+.grid-2,
+.grid-3,
+.teacher-layout,
+.student-layout {
+  display: grid;
+  gap: 16px;
+}
+
+.grid-2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.teacher-layout {
+  grid-template-columns: 1.1fr 0.9fr;
+}
+
+.student-layout {
+  grid-template-columns: 0.95fr 1.05fr;
+}
+
+.card {
+  border: 1px solid #d8d6cc;
+  background: #f8f7f2;
   border-radius: 8px;
   padding: 16px;
-  color: white;
-  text-align: left;
-  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.role-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.16);
+.card.white {
+  background: white;
 }
 
-.role-card.active {
-  border-color: #111827;
-  box-shadow: 0 0 0 4px rgba(17, 24, 39, 0.16);
-}
-
-.role-card h3 {
-  margin: 0 0 8px;
-  font-size: 18px;
-}
-
-.role-card .tag,
-.role-card .tendency {
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.2);
-  padding: 4px 8px;
-  border-radius: 999px;
-  font-size: 13px;
-  margin-bottom: 10px;
-}
-
-.role-card p {
-  margin: 0;
-  font-size: 14px;
-}
-
-/* =========================
-   听证会布局
-   ========================= */
-.hearing-layout {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 18px;
-}
-
-.statement-card,
-.score-card,
-.sub-panel {
-  border: 1px solid #dbe2ea;
-  border-radius: 8px;
-  padding: 18px;
-  background: #f8fafc;
-}
-
-.statement-card h3,
-.score-card h3,
-.sub-title h3 {
+.card h3,
+.card h4 {
   margin-top: 0;
 }
 
-.sub-panel {
-  margin-top: 18px;
+.phase-list,
+.event-list,
+.role-grid,
+.evidence-grid,
+.vote-options {
+  display: grid;
+  gap: 10px;
 }
 
-.sub-title {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  align-items: baseline;
-  margin-bottom: 12px;
+.phase-list {
+  grid-template-columns: repeat(4, 1fr);
 }
 
-.sub-title p {
+.role-grid {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.evidence-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.phase-btn,
+.event-btn,
+.role-btn,
+.evidence-btn,
+.action-btn,
+.mini-btn,
+.vote-btn {
+  border: 1px solid #9aa8b8;
+  background: white;
+  color: #1f2933;
+  border-radius: 6px;
+  padding: 10px 12px;
+  text-align: left;
+}
+
+.phase-btn.active,
+.evidence-btn.active,
+.role-btn.active {
+  border-color: #8a6f3d;
+  box-shadow: 0 0 0 3px rgba(138, 111, 61, 0.16);
+}
+
+.role-btn {
+  min-height: 190px;
+  color: white;
+  border: 2px solid transparent;
+}
+
+.role-btn span {
+  display: inline-block;
+  margin: 6px 0 10px;
+  border-radius: 999px;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 13px;
+}
+
+.role-btn p {
   margin: 0;
-  color: #667085;
   font-size: 14px;
 }
 
-.stance-list {
-  padding-left: 20px;
+.event-btn strong,
+.evidence-btn strong {
+  display: block;
+  margin-bottom: 4px;
 }
 
-.role-objective {
+.event-btn small,
+.evidence-btn small {
+  color: #667085;
+}
+
+.action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.action-btn,
+.mini-btn {
+  text-align: center;
+}
+
+.primary-btn {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+  color: white;
+}
+
+.danger-btn {
+  background: #b91c1c;
+  border-color: #b91c1c;
+  color: white;
+}
+
+.gold-btn {
+  background: #8a6f3d;
+  border-color: #8a6f3d;
+  color: white;
+}
+
+.input-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.input-grid label,
+.full-input label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid #c8c2b2;
+  border-radius: 6px;
+  padding: 10px;
   background: white;
-  border: 1px solid #dbe2ea;
-  border-radius: 8px;
-  padding: 12px;
-  margin-top: 12px;
 }
 
-/* =========================
-   评分条
-   ========================= */
+textarea {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.65;
+}
+
 .score-grid {
   display: grid;
-  gap: 12px;
-}
-
-.score-item {
-  display: grid;
-  gap: 4px;
+  gap: 10px;
 }
 
 .score-label {
@@ -372,145 +465,22 @@ button {
 
 .score-fill {
   height: 100%;
-  width: 50%;
-  background: #1d4ed8;
   border-radius: 999px;
   transition: width 0.3s;
 }
 
-/* =========================
-   证据卡牌
-   ========================= */
-.evidence-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-}
-
-.evidence-card {
-  min-height: 150px;
-  border: 1px solid #dbe2ea;
-  border-radius: 8px;
-  background: white;
-  padding: 14px;
-  text-align: left;
-  transition: transform 0.2s, border-color 0.2s;
-}
-
-.evidence-card:hover {
-  transform: translateY(-3px);
-  border-color: #2563eb;
-}
-
-.evidence-card.active {
-  border-color: #b91c1c;
-  box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.14);
-}
-
-.evidence-card h4 {
-  margin: 0 0 8px;
-  font-size: 16px;
-}
-
-.evidence-card p {
-  margin: 0;
-  font-size: 14px;
-  color: #475467;
-}
-
-.evidence-card .concept-tag {
-  display: inline-block;
-  margin-bottom: 8px;
-  padding: 3px 7px;
-  border-radius: 999px;
-  background: #eef2ff;
-  color: #3730a3;
-  font-size: 12px;
-}
-
-/* =========================
-   发言生成器
-   ========================= */
-.control-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-bottom: 14px;
-}
-
-.control-grid label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: bold;
-}
-
-.control-grid select {
-  width: 100%;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-  padding: 10px;
-  background: white;
-}
-
-.action-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.action-btn {
-  border: 1px solid #9aa8b8;
-  background: white;
-  color: #1f2933;
-  border-radius: 6px;
-  padding: 10px 12px;
-}
-
-.action-btn:hover {
-  border-color: #1d4ed8;
-  background: #eef4ff;
-}
-
-.generated-box {
-  margin-top: 14px;
-  background: white;
-  border: 1px solid #dbe2ea;
-  border-radius: 8px;
-  padding: 14px;
-}
-
-.generated-box h4 {
-  margin: 0 0 8px;
-}
-
-.generated-box p {
-  margin: 0;
-}
-
-/* =========================
-   听证记录与回应
-   ========================= */
-.record-layout {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 16px;
-}
-
 .record-log {
-  min-height: 260px;
-  max-height: 380px;
+  max-height: 360px;
   overflow-y: auto;
-  background: white;
-  border: 1px solid #dbe2ea;
-  border-radius: 8px;
-  padding: 14px;
+  display: grid;
+  gap: 10px;
 }
 
 .record-item {
   border-left: 4px solid #64748b;
-  background: #f8fafc;
-  padding: 11px;
-  margin-bottom: 12px;
+  background: white;
+  border-radius: 8px;
+  padding: 12px;
 }
 
 .record-item strong {
@@ -518,146 +488,54 @@ button {
   margin-bottom: 4px;
 }
 
-.reply-box {
-  background: white;
-  border: 1px solid #dbe2ea;
+.spotlight {
+  background: #fbf6e8;
+  border: 1px solid #ead7aa;
   border-radius: 8px;
   padding: 14px;
 }
 
-.reply-box h4 {
-  margin-top: 0;
-}
-
-.empty-tip {
-  color: #667085;
-}
-
-.main-btn {
-  width: 100%;
-  margin-top: 16px;
-  border: none;
-  background: #1d4ed8;
-  color: white;
-  padding: 12px 16px;
-  border-radius: 6px;
-  font-size: 15px;
-}
-
-/* =========================
-   投票与条件
-   ========================= */
-.conditions-panel {
-  border: 1px solid #dbe2ea;
-  background: #f8fafc;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 18px;
-}
-
-.conditions-panel h3 {
-  margin-top: 0;
-}
-
-.condition-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
-
-.condition-item {
-  display: flex;
-  gap: 8px;
-  align-items: flex-start;
-  background: white;
-  border: 1px solid #dbe2ea;
-  border-radius: 8px;
-  padding: 11px;
-}
-
-.vote-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-}
-
-.policy-btn {
-  border: none;
-  border-radius: 8px;
-  padding: 22px;
-  font-size: 18px;
-  color: white;
-}
-
-.policy-btn.approve {
-  background: #1d4ed8;
-}
-
-.policy-btn.reject {
-  background: #374151;
-}
-
-.policy-btn:hover {
-  filter: brightness(1.08);
-}
-
-.vote-result {
-  margin-top: 16px;
+.timer-display {
+  display: inline-block;
+  min-width: 86px;
+  text-align: center;
+  font-size: 24px;
   font-weight: bold;
   color: #b91c1c;
-}
-
-/* =========================
-   结果测算面板
-   ========================= */
-.impact-summary {
-  background: #fff7ed;
-  border: 1px solid #fed7aa;
+  background: #fff5f5;
   border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 18px;
+  padding: 8px 10px;
 }
 
-.result-grid {
+.vote-bar-list {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
+  gap: 10px;
 }
 
-.result-card {
-  border-radius: 8px;
-  padding: 18px;
-  border: 1px solid #dbe2ea;
-  background: #ffffff;
+.vote-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 54px;
+  gap: 10px;
+  align-items: center;
 }
 
-.approve-result {
-  border-top: 5px solid #1d4ed8;
+.vote-track {
+  height: 12px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
 }
 
-.reject-result {
-  border-top: 5px solid #374151;
+.vote-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.3s;
 }
 
-.result-card h3 {
-  margin-top: 0;
+.knowledge-card {
+  min-height: 180px;
 }
 
-.result-card ul {
-  padding-left: 20px;
-}
-
-.teacher-note {
-  margin-top: 18px;
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
-  border-radius: 8px;
-  padding: 15px;
-}
-
-/* =========================
-   理论解读弹窗
-   ========================= */
 .modal {
   position: fixed;
   inset: 0;
@@ -668,13 +546,9 @@ button {
   z-index: 30;
 }
 
-.modal.hidden {
-  display: none;
-}
-
 .modal-content {
   position: relative;
-  width: min(540px, calc(100% - 40px));
+  width: min(560px, calc(100% - 40px));
   background: white;
   border-radius: 8px;
   padding: 26px;
@@ -693,10 +567,15 @@ button {
   font-size: 20px;
 }
 
-/* =========================
-   响应式适配
-   ========================= */
 @media (max-width: 980px) {
+  .topbar {
+    grid-template-columns: auto 1fr;
+  }
+
+  .mode-switch {
+    grid-column: 1 / -1;
+  }
+
   .page-shell {
     padding-right: 0;
   }
@@ -707,19 +586,19 @@ button {
     margin: 20px auto 0;
   }
 
-  .role-grid,
-  .evidence-grid,
-  .condition-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .teacher-layout,
+  .student-layout,
+  .hero-grid,
+  .grid-2,
+  .grid-3,
+  .input-grid {
+    grid-template-columns: 1fr;
   }
 
-  .hero-grid,
-  .hearing-layout,
-  .record-layout,
-  .vote-grid,
-  .result-grid,
-  .control-grid {
-    grid-template-columns: 1fr;
+  .role-grid,
+  .phase-list,
+  .method-strip {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -728,14 +607,25 @@ button {
     width: calc(100% - 28px);
   }
 
+  .brand-mark {
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
+  }
+
+  .topbar h1 {
+    font-size: 21px;
+  }
+
   .role-grid,
+  .phase-list,
+  .method-strip,
   .evidence-grid,
-  .condition-grid,
   .data-board {
     grid-template-columns: 1fr;
   }
 
-  .topbar h1 {
-    font-size: 22px;
+  .vote-row {
+    grid-template-columns: 86px 1fr 44px;
   }
 }
